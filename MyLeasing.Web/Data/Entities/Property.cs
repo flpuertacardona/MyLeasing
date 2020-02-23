@@ -40,7 +40,7 @@ namespace MyLeasing.Web.Data.Entities
 
         public string Remarks { get; set; }
 
-        public PropertyType propertyType { get; set; }
+        public PropertyType PropertyType { get; set; }
 
         public Owner Owner { get; set; }
 
