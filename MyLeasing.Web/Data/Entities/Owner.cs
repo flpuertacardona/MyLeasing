@@ -11,8 +11,6 @@ namespace MyLeasing.Web.Data.Entities
         public ICollection<Property> Properties { get; set; }
 
         public ICollection<Contract> Contracts { get; set; }
-
-
     }
 }
 
