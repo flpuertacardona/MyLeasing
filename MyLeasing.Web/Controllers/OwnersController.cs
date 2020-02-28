@@ -223,6 +223,7 @@ namespace MyLeasing.Web.Controllers
             {
                 OwnerId = owner.Id,
                 PropertyTypes = _combosHelper.GetComboPropertyTypes(),
+                BusinessTypes = _combosHelper.GetComboBusinessTypes()
             };
             return View(model);
         }
@@ -250,6 +251,7 @@ namespace MyLeasing.Web.Controllers
             var property = await _dataContext.Properties
                 .Include(p => p.Owner)
                 .Include(p => p.PropertyType)
+                .Include(p => p.BusinessType)
                 .FirstOrDefaultAsync(p => p.Id==id);
 
             if (property == null)
@@ -286,6 +288,7 @@ namespace MyLeasing.Web.Controllers
                 .ThenInclude(c => c.Lessee)
                 .ThenInclude(l => l.User)
                 .Include(o => o.PropertyType)
+                .Include(o => o.BusinessType)
                 .Include(p => p.PropertyImages)
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (property == null)

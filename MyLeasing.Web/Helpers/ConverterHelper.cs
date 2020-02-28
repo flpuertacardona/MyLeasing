@@ -51,8 +51,10 @@ namespace MyLeasing.Web.Helpers
                 Price = model.Price,
                 PropertyImages = isNew ? new List<PropertyImage>() : model.PropertyImages,
                 PropertyType = await _dataContext.PropertyTypes.FindAsync(model.PropertyTypeId),
+                BusinessType = await _dataContext.BusinessTypes.FindAsync(model.BusinessTypeId),
                 Remarks = model.Remarks,
                 Rooms = model.Rooms,
+                BathRooms = model.BathRooms,
                 SquareMeters = model.SquareMeters,
                 Stratum = model.Stratum
             };
@@ -72,13 +74,17 @@ namespace MyLeasing.Web.Helpers
                 Price = property.Price,
                 PropertyImages = property.PropertyImages,
                 PropertyType = property.PropertyType,
+                BusinessType = property.BusinessType,
                 Remarks = property.Remarks,
                 Rooms = property.Rooms,
+                BathRooms = property.BathRooms,
                 SquareMeters = property.SquareMeters,
                 Stratum = property.Stratum,
                 OwnerId = property.Owner.Id,
                 PropertyTypeId = property.PropertyType.Id,
-                PropertyTypes = _combosHelper.GetComboPropertyTypes()
+                PropertyTypes = _combosHelper.GetComboPropertyTypes(),
+                BusinessTypeId = property.BusinessType.Id,
+                BusinessTypes = _combosHelper.GetComboBusinessTypes()
             };
         }
     }

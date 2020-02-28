@@ -22,7 +22,7 @@ namespace MyLeasing.Web.Controllers
         // GET: PropertyTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PropertyTypes.ToListAsync());
+            return View(await _context.PropertyTypes.OrderBy(pt => pt.Name).ToListAsync());
         }
 
         // GET: PropertyTypes/Details/5

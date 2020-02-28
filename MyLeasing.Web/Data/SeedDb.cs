@@ -22,21 +22,38 @@ namespace MyLeasing.Web.Data
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckRoles();
-            var manager = await CheckUserAsync("2020", "Francisco", "Puerta", "flpuertacardona@gmail.com", "3112363842", "Cra 43A 60 sur 64","Manager");
-            var owner   = await CheckUserAsync("1010", "Patricia", "Bernal", "donpanchocolate@gmail.com", "3112363842", "Cra 43A 60 sur 64","Owner");
-            var lessee  = await CheckUserAsync("3030", "David", "Puerta", "gerenciaproyectos.dys@gmail.com", "3112363842", "Cra 43A 60 sur 64","Lessee");
+            var manager = await CheckUserAsync("2020", "Francisco", "Puerta", "flpuertacardona@gmail.com", "3112363842", "Cra 43A 60 sur 64", "Manager");
+            var owner = await CheckUserAsync("1010", "Patricia", "Bernal", "donpanchocolate@gmail.com", "3112363842", "Cra 43A 60 sur 64", "Owner");
+            var lessee = await CheckUserAsync("3030", "David", "Puerta", "gerenciaproyectos.dys@gmail.com", "3112363842", "Cra 43A 60 sur 64", "Lessee");
 
             await CheckPropertiesAsyn();
             await CheckPropertyTypesAsync();
+            await CheckBusinessTypesAsync();
             await CheckManagerAsync(manager);
             await CheckOwnerAsync(owner);
             await CheckLesseesAsync(lessee);
             await CheckContractAsync();
         }
 
+        private async Task CheckBusinessTypesAsync()
+        {
+            if (!_context.BusinessTypes.Any())
+            {
+                _context.BusinessTypes.Add(new Entities.BusinessType { Name = "Vender" });
+                _context.BusinessTypes.Add(new Entities.BusinessType { Name = "Alquiler" });
+                _context.BusinessTypes.Add(new Entities.BusinessType { Name = "Permutar" });
+                _context.BusinessTypes.Add(new Entities.BusinessType { Name = "Vender - Alquiler" });
+                _context.BusinessTypes.Add(new Entities.BusinessType { Name = "Vender - Permutar" });
+                _context.BusinessTypes.Add(new Entities.BusinessType { Name = "Permutar - Alquiler" });
+                _context.BusinessTypes.Add(new Entities.BusinessType { Name = "Vender - Alquiler - Permutar" });
+
+            }
+            await _context.SaveChangesAsync();
+        }
+
         private async Task CheckContractAsync()
         {
-            var owner =_context.Owners.FirstOrDefault();
+            var owner = _context.Owners.FirstOrDefault();
             var lessee = _context.Lessees.FirstOrDefault();
             var property = _context.Properties.FirstOrDefault();
             if (!_context.Contracts.Any())
@@ -45,13 +62,13 @@ namespace MyLeasing.Web.Data
 
                 {
                     StartDate = DateTime.Today,
-                    EndDate=DateTime.Today.AddDays(1),
-                    IsActive=true,
-                    Lessee=lessee,
-                    Owner=owner,
-                    Price=800000M,
-                    Property=property,
-                    Remarks="propiedad en excelnete estado, excelente ubicación, buen precio,...."
+                    EndDate = DateTime.Today.AddDays(1),
+                    IsActive = true,
+                    Lessee = lessee,
+                    Owner = owner,
+                    Price = 800000M,
+                    Property = property,
+                    Remarks = "propiedad en excelnete estado, excelente ubicación, buen precio,...."
 
                 });
                 await _context.SaveChangesAsync();
@@ -81,14 +98,14 @@ namespace MyLeasing.Web.Data
             if (user == null)
             {
                 user = new User
-                { 
-                    FirstName=firstName,
-                    LastName=lastName,
-                    Email=email,
-                    UserName=email,
-                    PhoneNumber=phone,
-                    Address=address,
-                    Document=document
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    UserName = email,
+                    PhoneNumber = phone,
+                    Address = address,
+                    Document = document
                 };
 
                 await _userHelper.AddUserAsync(user, "123456");
@@ -112,7 +129,7 @@ namespace MyLeasing.Web.Data
 
             if (!_context.Properties.Any())
             {
-                AddProperty("Carrera 43A 60 sur 64 Casa 130","Sabaneta",owner,propertytype,800000M,2,72,4);
+                AddProperty("Carrera 43A 60 sur 64 Casa 130", "Sabaneta", owner, propertytype, 800000M, 2, 72, 4);
                 AddProperty("Carrera 45A 60 sur 74 Casa 130", "Sabaneta", owner, propertytype, 900000M, 3, 72, 4);
                 AddProperty("Carrera 43A 60 sur 64 Casa 130", "Sabaneta", owner, propertytype, 1800000M, 4, 72, 4);
                 await _context.SaveChangesAsync();
@@ -120,25 +137,25 @@ namespace MyLeasing.Web.Data
         }
 
         private async void AddProperty(
-            string address, 
-            string barrio, 
-            Owner owner, 
-            PropertyType propertytype, 
-            decimal precio, 
-            int rooms, 
-            int area, 
+            string address,
+            string barrio,
+            Owner owner,
+            PropertyType propertytype,
+            decimal precio,
+            int rooms,
+            int area,
             int estrato)
         {
             _context.Properties.Add(new Property
             {
-                Address=address,
-                Neighborhood=barrio,
-                Owner=owner,
-                PropertyType=propertytype,
-                Price=precio,
-                Rooms=rooms,
-                SquareMeters=area,
-                Stratum=estrato
+                Address = address,
+                Neighborhood = barrio,
+                Owner = owner,
+                PropertyType = propertytype,
+                Price = precio,
+                Rooms = rooms,
+                SquareMeters = area,
+                Stratum = estrato
             });
         }
 

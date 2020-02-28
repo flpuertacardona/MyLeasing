@@ -16,6 +16,24 @@ namespace MyLeasing.Web.Helpers
             _dataContext = dataContext;
         }
 
+        public IEnumerable<SelectListItem> GetComboBusinessTypes()
+        {
+            var list = _dataContext.BusinessTypes.Select(b => new SelectListItem
+            {
+                Text = b.Name,
+                Value = $"{b.Id}"
+            })
+                .ToList();
+            list.Insert(0, new SelectListItem
+            {
+                Text = "(Select a business type ...)",
+                Value = "0"
+
+            });
+
+            return list;
+        }
+
         public IEnumerable<SelectListItem> GetComboLessees()
         {
             var list = _dataContext.Lessees.Select(l => new SelectListItem

@@ -17,7 +17,13 @@ namespace MyLeasing.Web.Models
         [Range(1, int.MaxValue, ErrorMessage = "You must select a property type.")]
         public int PropertyTypeId { get; set; }
 
+        [Required(ErrorMessage = "The field {0} is mandatory.")]
+        [Display(Name = "Business Type")]
+        [Range(1, int.MaxValue, ErrorMessage = "You must select a property type.")]
+        public int BusinessTypeId { get; set; }
+
         public IEnumerable<SelectListItem> PropertyTypes { get; set; }
+        public IEnumerable<SelectListItem> BusinessTypes { get; set; }
 
     }
 }
