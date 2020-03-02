@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyLeasing.Web.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,6 +20,14 @@ namespace MyLeasing.Web.Data.Entities
         [MaxLength(50, ErrorMessage = "El campo {0}, debe tener una longitud maxima de {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Address { get; set; }
+
+        [Display(Name = "Escritura")]
+        [MaxLength(50, ErrorMessage = "El campo {0}, debe tener una longitud maxima de {1} caracteres")]
+        public string Escritura { get; set; }
+
+        [Display(Name = "Estado Físico")]
+        [MaxLength(50, ErrorMessage = "El campo {0}, debe tener una longitud maxima de {1} caracteres")]
+        public string Status { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [DisplayFormat(DataFormatString ="{0:C2}", ApplyFormatInEditMode =false)]
@@ -49,6 +58,7 @@ namespace MyLeasing.Web.Data.Entities
         public PropertyType PropertyType { get; set; }
 
         public BusinessType BusinessType { get; set; }
+        public Agent Agent { get; set; }
 
         public Owner Owner { get; set; }
 

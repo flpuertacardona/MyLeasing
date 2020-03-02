@@ -27,14 +27,14 @@ namespace MyLeasing.Web.Helpers
             return new Contract
             {
                 EndDate = model.EndDate.ToUniversalTime(),
+                Id = isNew ? 0 : model.Id,
                 IsActive = model.IsActive,
                 Lessee = await _dataContext.Lessees.FindAsync(model.LesseeId),
                 Owner = await _dataContext.Owners.FindAsync(model.OwnerId),
                 Price = model.Price,
                 Property = await _dataContext.Properties.FindAsync(model.PropertyId),
                 Remarks = model.Remarks,
-                StartDate = model.StartDate.ToUniversalTime(),
-                Id = isNew ? 0 : model.Id
+                StartDate = model.StartDate.ToUniversalTime()
             };
         }
         public async Task<Property> ToPropertyAsync(PropertyViewModel model, bool isNew)
@@ -52,6 +52,8 @@ namespace MyLeasing.Web.Helpers
                 PropertyImages = isNew ? new List<PropertyImage>() : model.PropertyImages,
                 PropertyType = await _dataContext.PropertyTypes.FindAsync(model.PropertyTypeId),
                 BusinessType = await _dataContext.BusinessTypes.FindAsync(model.BusinessTypeId),
+                Agent = await _dataContext.Agents.FindAsync(model.AgentId),
+                Status = model.Status,
                 Remarks = model.Remarks,
                 Rooms = model.Rooms,
                 BathRooms = model.BathRooms,
@@ -84,7 +86,9 @@ namespace MyLeasing.Web.Helpers
                 PropertyTypeId = property.PropertyType.Id,
                 PropertyTypes = _combosHelper.GetComboPropertyTypes(),
                 BusinessTypeId = property.BusinessType.Id,
-                BusinessTypes = _combosHelper.GetComboBusinessTypes()
+                BusinessTypes = _combosHelper.GetComboBusinessTypes(),
+                AgentId = property.Agent.Id,
+                Agents = _combosHelper.GetComboAgents()
             };
         }
     }

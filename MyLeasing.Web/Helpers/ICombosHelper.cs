@@ -8,5 +8,6 @@ namespace MyLeasing.Web.Helpers
         IEnumerable<SelectListItem> GetComboPropertyTypes();
         IEnumerable<SelectListItem> GetComboBusinessTypes();
         IEnumerable<SelectListItem> GetComboLessees();
+        IEnumerable<SelectListItem> GetComboAgents();
     }
 }

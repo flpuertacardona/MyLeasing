@@ -13,9 +13,22 @@ using MyLeasing.Web.Models;
 
 namespace MyLeasing.Web.Controllers
 {
+
     [Authorize(Roles = "Manager")] 
     public class OwnersController : Controller
     {
+
+        public List<string> _status = new List<string>()
+        {
+            "Select a property status ...",
+            "Nuevo   ", "Usado   ",
+            "Proyecto", "Construcción",
+            "Mantenimiento",
+            "Hipoteca",
+            "Embargo",
+            "Acondicionamiento"
+        };
+
         private readonly DataContext _dataContext;
         private readonly IUserHelper _userHelper;
         private readonly ICombosHelper _combosHelper;
@@ -223,7 +236,9 @@ namespace MyLeasing.Web.Controllers
             {
                 OwnerId = owner.Id,
                 PropertyTypes = _combosHelper.GetComboPropertyTypes(),
-                BusinessTypes = _combosHelper.GetComboBusinessTypes()
+                BusinessTypes = _combosHelper.GetComboBusinessTypes(),
+                Agents = _combosHelper.GetComboAgents(),
+
             };
             return View(model);
         }
@@ -252,6 +267,7 @@ namespace MyLeasing.Web.Controllers
                 .Include(p => p.Owner)
                 .Include(p => p.PropertyType)
                 .Include(p => p.BusinessType)
+                .Include(a => a.Agent)
                 .FirstOrDefaultAsync(p => p.Id==id);
 
             if (property == null)
@@ -288,8 +304,10 @@ namespace MyLeasing.Web.Controllers
                 .ThenInclude(c => c.Lessee)
                 .ThenInclude(l => l.User)
                 .Include(o => o.PropertyType)
+                .Include(o => o.PropertyImages)
                 .Include(o => o.BusinessType)
-                .Include(p => p.PropertyImages)
+                .Include(a => a.Agent)
+                .ThenInclude(a => a.User)
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (property == null)
             {
@@ -385,6 +403,40 @@ namespace MyLeasing.Web.Controllers
             }
 
             return View(model);
+        }
+
+        public async Task<IActionResult> EditContract(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var contract = await _dataContext.Contracts
+                .Include(p => p.Owner)
+                .Include(p => p.Lessee)
+                .Include(p => p.Property)
+                .FirstOrDefaultAsync(p => p.Id == id.Value);
+            if (contract == null)
+            {
+                return NotFound();
+            }
+
+            return View(_converterHelper.ToContractViewModel(contract));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditContract(ContractViewModel view)
+        {
+            if (ModelState.IsValid)
+            {
+                var contract = await _converterHelper.ToContractAsync(view, false);
+                _dataContext.Contracts.Update(contract);
+                await _dataContext.SaveChangesAsync();
+                return RedirectToAction($"{nameof(DetailsProperty)}/{view.OwnerId}");
+            }
+
+            return View(view);
         }
 
     }

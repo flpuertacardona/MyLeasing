@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLeasing.Web.Data;
 
 namespace MyLeasing.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200228130743_AddAgent")]
+    partial class AddAgent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -276,9 +278,6 @@ namespace MyLeasing.Web.Migrations
                     b.Property<int>("Rooms");
 
                     b.Property<int>("SquareMeters");
-
-                    b.Property<string>("Status")
-                        .HasMaxLength(50);
 
                     b.Property<int>("Stratum");
 

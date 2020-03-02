@@ -24,7 +24,10 @@ namespace MyLeasing.Web.Data
             await CheckRoles();
             var manager = await CheckUserAsync("2020", "Francisco", "Puerta", "flpuertacardona@gmail.com", "3112363842", "Cra 43A 60 sur 64", "Manager");
             var owner = await CheckUserAsync("1010", "Patricia", "Bernal", "donpanchocolate@gmail.com", "3112363842", "Cra 43A 60 sur 64", "Owner");
-            var lessee = await CheckUserAsync("3030", "David", "Puerta", "gerenciaproyectos.dys@gmail.com", "3112363842", "Cra 43A 60 sur 64", "Lessee");
+            var lessee = await CheckUserAsync("3030", "David", "Puerta", "davidpb@gmail.com", "3112363842", "Cra 43A 60 sur 64", "Lessee");
+            var agent1 = await CheckUserAsync("11100", "Sebastian", "Puerta", "sebastianpb@gmail.com", "3112363842", "Cra 43A 60 sur 64", "Agent");
+            var agent2 = await CheckUserAsync("13100", "Andrea", "Puerta", "andreapb@gmail.com", "3112363842", "Cra 43A 60 sur 64", "Agent");
+            var agent3 = await CheckUserAsync("143030", "David", "Puerta", "davidpb@gmail.com", "3112363842", "Cra 43A 60 sur 64", "Agent");
 
             await CheckPropertiesAsyn();
             await CheckPropertyTypesAsync();
@@ -32,7 +35,19 @@ namespace MyLeasing.Web.Data
             await CheckManagerAsync(manager);
             await CheckOwnerAsync(owner);
             await CheckLesseesAsync(lessee);
+            await CheckAgentAsync(agent1);
+            await CheckAgentAsync(agent2);
+            await CheckAgentAsync(agent3);
             await CheckContractAsync();
+        }
+
+        private async Task CheckAgentAsync(User user)
+        {
+            if (! _context.Agents.Any())
+            {
+                _context.Agents.Add(new Agent { User = user });
+                await _context.SaveChangesAsync();
+            }
         }
 
         private async Task CheckBusinessTypesAsync()
@@ -120,6 +135,7 @@ namespace MyLeasing.Web.Data
             await _userHelper.CheckRoleAsync("Manager");
             await _userHelper.CheckRoleAsync("Owner");
             await _userHelper.CheckRoleAsync("Lessee");
+            await _userHelper.CheckRoleAsync("Agent");
         }
 
         private async Task CheckPropertiesAsyn()

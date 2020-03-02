@@ -16,6 +16,23 @@ namespace MyLeasing.Web.Helpers
             _dataContext = dataContext;
         }
 
+        public IEnumerable<SelectListItem> GetComboAgents()
+        {
+            var list = _dataContext.Agents.Select(a => new SelectListItem
+            {
+                Text = a.User.FullNameDoc,
+                Value = a.Id.ToString()
+            }).OrderBy(a => a.Text).ToList();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "(Select a Agent...)",
+                Value = "0"
+            });
+
+            return list;
+        }
+
         public IEnumerable<SelectListItem> GetComboBusinessTypes()
         {
             var list = _dataContext.BusinessTypes.Select(b => new SelectListItem
@@ -68,5 +85,6 @@ namespace MyLeasing.Web.Helpers
 
             return list;
         }
+
     }
 }

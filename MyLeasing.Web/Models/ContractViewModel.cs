@@ -13,7 +13,7 @@ namespace MyLeasing.Web.Models
 
         [Required(ErrorMessage = "The field {0} is mandatory.")]
         [Display(Name = "Lessee")]
-        [Range(1, int.MaxValue, ErrorMessage = "You must select a lessess.")]
+        [Range(1, int.MaxValue, ErrorMessage = "You must select a lessee.")]
         public int LesseeId { get; set; }
 
         public IEnumerable<SelectListItem> Lessees { get; set; }

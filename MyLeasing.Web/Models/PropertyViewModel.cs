@@ -19,11 +19,17 @@ namespace MyLeasing.Web.Models
 
         [Required(ErrorMessage = "The field {0} is mandatory.")]
         [Display(Name = "Business Type")]
-        [Range(1, int.MaxValue, ErrorMessage = "You must select a property type.")]
+        [Range(1, int.MaxValue, ErrorMessage = "You must select a business type.")]
         public int BusinessTypeId { get; set; }
+
+        [Required(ErrorMessage = "The field {0} is mandatory.")]
+        [Display(Name = "Agent")]
+        [Range(1, int.MaxValue, ErrorMessage = "You must select a agent.")]
+        public int AgentId { get; set; }
 
         public IEnumerable<SelectListItem> PropertyTypes { get; set; }
         public IEnumerable<SelectListItem> BusinessTypes { get; set; }
 
+        public IEnumerable<SelectListItem> Agents { get; set; }
     }
 }
