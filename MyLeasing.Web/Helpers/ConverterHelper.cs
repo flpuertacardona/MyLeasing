@@ -37,6 +37,27 @@ namespace MyLeasing.Web.Helpers
                 StartDate = model.StartDate.ToUniversalTime()
             };
         }
+
+        public ContractViewModel ToContractViewModel(Contract contract)
+        {
+            return new ContractViewModel
+            {
+                EndDate = contract.EndDateLocal,
+                Id = contract.Id,
+                IsActive = contract.IsActive,
+                Lessee = contract.Lessee,
+                Owner = contract.Owner,
+                Price = contract.Price,
+                Property=contract.Property,
+                Remarks = contract.Remarks,
+                StartDate = contract.StartDateLocal,
+                LesseeId = contract.Lessee.Id,
+                Lessees = _combosHelper.GetComboLessees(),
+                OwnerId= contract.Owner.Id,
+                PropertyId = contract.Property.Id
+            };
+        }
+
         public async Task<Property> ToPropertyAsync(PropertyViewModel model, bool isNew)
         {
             return new Property
