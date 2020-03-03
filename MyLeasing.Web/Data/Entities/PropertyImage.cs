@@ -17,8 +17,6 @@ namespace MyLeasing.Web.Data.Entities
         public string ImageFullPath => string.IsNullOrEmpty(ImageUrl) 
             ? null 
             :  $"https://TBD.azurewebsites.net{ImageUrl.Substring(1)}";
-
         public Property Property { get; set; }
-
     }
 }

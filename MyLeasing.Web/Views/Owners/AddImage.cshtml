@@ -14,13 +14,13 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
 
-            <div class="column">
+            <div class="form-group">
                 <label asp-for="ImageFile" class="control-label"></label>
-                <input asp-for="ImageFile" class="mySlides fade" alt="Forest" type="file" />
-                <span asp-validation-for="ImageFile" class="mySlides fade"></span>
+                <input asp-for="ImageFile" class="form-control" alt="Forest" type="file" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
 
-            <div class="mySlides fade">
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
                 <a asp-action="DetailsProperty" asp-route-id="@Model.Id" class="btn btn-success">Back to Property</a>
             </div>

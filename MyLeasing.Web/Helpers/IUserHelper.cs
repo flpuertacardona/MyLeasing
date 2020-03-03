@@ -17,7 +17,7 @@ namespace MyLeasing.Web.Helpers
         Task<bool> IsUserInRoleAsync(User user, string roleName );
         Task<SignInResult> LoginAsync(LoginViewModel model);
         Task LogOutAsync();
-
-
+        Task<bool> DeleteUserAsync(string email);
+        Task<IdentityResult> UpdateUserAsync(User user);
     }
 }
