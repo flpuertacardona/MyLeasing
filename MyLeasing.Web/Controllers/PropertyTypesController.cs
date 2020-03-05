@@ -125,29 +125,50 @@ namespace MyLeasing.Web.Controllers
             }
 
             var propertyType = await _context.PropertyTypes
+                .Include(pt => pt.Properties)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (propertyType == null)
             {
                 return NotFound();
             }
 
-            return View(propertyType);
-        }
+            if (propertyType.Properties.Count() >0)
+            {
+                //TODO : message
+                return RedirectToAction(nameof(Index));
+            }
 
-        // POST: PropertyTypes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var propertyType = await _context.PropertyTypes.FindAsync(id);
             _context.PropertyTypes.Remove(propertyType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         private bool PropertyTypeExists(int id)
         {
             return _context.PropertyTypes.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> DetailsContract(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var contract = await _dataContext.Contracts
+                .Include(c => c.Owner)
+                .ThenInclude(o => o.User)
+                .Include(c => c.Lessee)
+                .ThenInclude(o => o.User)
+                .Include(c => c.Property)
+                .ThenInclude(p => p.PropertyType)
+                .FirstOrDefaultAsync(pi => pi.Id == id.Value);
+            if (contract == null)
+            {
+                return NotFound();
+            }
+
+            return View(contract);
+        }
+
     }
 }
