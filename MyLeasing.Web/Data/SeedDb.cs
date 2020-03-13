@@ -152,7 +152,7 @@ namespace MyLeasing.Web.Data
             }
         }
 
-        private async void AddProperty(
+        private void AddProperty(
             string address,
             string barrio,
             Owner owner,
