@@ -82,11 +82,12 @@ namespace MyLeasing.Web.Controllers
             return View(owner);
         }
 
-        // GET: Owners/Create
         public IActionResult Create()
         {
-            return View();
+            var view = new AddUserViewModel { RoleId = 2 };
+            return View(view);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AddUserViewModel model)
@@ -104,6 +105,14 @@ namespace MyLeasing.Web.Controllers
                     };
                     _dataContext.Owners.Add(owner);
                     await _dataContext.SaveChangesAsync();
+                    var myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+
+                    var tokenLink = Url.Action("ConfirmEmail", "Account", new
+                    {
+                        userid = user.Id,
+                        token = myToken
+                    }, protocol: HttpContext.Request.Scheme);
+
                     return RedirectToAction("Index");
                 }
                 ModelState.AddModelError(string.Empty, "El usuario ya existe" );
@@ -124,13 +133,14 @@ namespace MyLeasing.Web.Controllers
                 UserName=model.Username
             };
             var result = await _userHelper.AddUserAsync(user, model.Password);
+            user = await _userHelper.GetUserByEmailAsync(model.Username);
             if (result.Succeeded)
             {
-                user = await _userHelper.GetUserByEmailAsync(model.Username);
                 await _userHelper.AddUserToRoleAsync(user, "Owner");
-                return user;
+//                return user;
             }
-            return null;
+//            return null;
+            return user;
         }
 
         // GET: Owners/Edit/5
