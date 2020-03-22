@@ -10,8 +10,8 @@ using MyLeasing.Web.Data;
 namespace MyLeasing.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200305184559_AddEditUserModel")]
-    partial class AddEditUserModel
+    [Migration("20200321191212_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -154,7 +154,7 @@ namespace MyLeasing.Web.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(25);
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 

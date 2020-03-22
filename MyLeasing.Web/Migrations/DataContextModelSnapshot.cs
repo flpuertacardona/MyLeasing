@@ -152,7 +152,7 @@ namespace MyLeasing.Web.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(25);
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 

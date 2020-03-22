@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MyLeasing.Web.Helpers
 {
@@ -9,5 +9,6 @@ namespace MyLeasing.Web.Helpers
         IEnumerable<SelectListItem> GetComboBusinessTypes();
         IEnumerable<SelectListItem> GetComboLessees();
         IEnumerable<SelectListItem> GetComboAgents();
+        IEnumerable<SelectListItem> GetComboRoles();
     }
 }

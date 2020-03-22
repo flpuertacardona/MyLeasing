@@ -31,7 +31,5 @@ namespace MyLeasing.Web.Data.Entities
 
         [Display(Name = "Nombre Documento")]
         public string FullNameDoc => $"{FullName} - {Document}";
-
-
     }
 }

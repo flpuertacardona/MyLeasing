@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using MyLeasing.Web.Data;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MyLeasing.Web.Data;
 
 namespace MyLeasing.Web.Helpers
 {
@@ -15,7 +13,6 @@ namespace MyLeasing.Web.Helpers
         {
             _dataContext = dataContext;
         }
-
         public IEnumerable<SelectListItem> GetComboAgents()
         {
             var list = _dataContext.Agents.Select(a => new SelectListItem
@@ -51,13 +48,16 @@ namespace MyLeasing.Web.Helpers
             return list;
         }
 
+
         public IEnumerable<SelectListItem> GetComboLessees()
         {
             var list = _dataContext.Lessees.Select(l => new SelectListItem
             {
                 Text = l.User.FullNameDoc,
-                Value = l.Id.ToString()
-            }).OrderBy(l => l.Text).ToList();
+                Value = $"{l.Id}"
+            })
+                .OrderBy(pt => pt.Text)
+                .ToList();
 
             list.Insert(0, new SelectListItem
             {
@@ -67,6 +67,7 @@ namespace MyLeasing.Web.Helpers
 
             return list;
         }
+
         public IEnumerable<SelectListItem> GetComboPropertyTypes()
         {
             var list = _dataContext.PropertyTypes.Select(pt => new SelectListItem
@@ -76,15 +77,26 @@ namespace MyLeasing.Web.Helpers
             })
                 .OrderBy(pt => pt.Text)
                 .ToList();
+
             list.Insert(0, new SelectListItem
             {
-                Text = "(Select a property type ...)",
+                Text = "(Select a property type...)",
                 Value = "0"
-
             });
 
             return list;
         }
 
+        public IEnumerable<SelectListItem> GetComboRoles()
+        {
+            var list = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "0", Text = "(Select a role...)" },
+                new SelectListItem { Value = "1", Text = "Lessee" },
+                new SelectListItem { Value = "2", Text = "Owner" }
+            };
+
+            return list;
+        }
     }
 }
