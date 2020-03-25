@@ -13,7 +13,6 @@ using MyLeasing.Web.Data.Entities;
 namespace MyLeasing.Web.Controllers
 {
     [Authorize(Roles = "Manager")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PropertyTypesController : Controller
     {
         private readonly DataContext _context;

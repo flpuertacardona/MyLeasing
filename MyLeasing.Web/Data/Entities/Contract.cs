@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace MyLeasing.Web.Data.Entities
 {
@@ -45,9 +44,5 @@ namespace MyLeasing.Web.Data.Entities
         public Owner Owner { get; set; }
         public Lessee Lessee { get; set; }
         public Property Property { get; set; }
-
-
-
-
     }
 }

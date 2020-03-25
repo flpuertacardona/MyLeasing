@@ -152,7 +152,7 @@ namespace MyLeasing.Web.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(25);
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -260,6 +260,10 @@ namespace MyLeasing.Web.Migrations
                     b.Property<bool>("HasParkingLot");
 
                     b.Property<bool>("IsAvailable");
+
+                    b.Property<double>("Latitude");
+
+                    b.Property<double>("Longitude");
 
                     b.Property<string>("Neighborhood")
                         .IsRequired()
